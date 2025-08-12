@@ -1,0 +1,30 @@
+listen:
+  service_name: stocks
+  env: development
+  gateway_port: 8081
+  grpc_port: 7071
+  # migrations_path: internal/migrations
+  migrations_path: migrations
+
+postgres:
+  # host: localhost
+  host: stocks-db
+  port: 5432
+  username: user_stocks
+  db_name: stocks
+  password: stocks1234
+  ssl_mode: disable
+
+kafka:
+  brokers:
+    - kafka1:29091
+    - kafka2:29092
+  topic: metrics
+  group_id: metrics-consumer-group
+
+tracing:
+  # jaeger_endpoint: http://localhost:14268/api/traces
+  jaeger_endpoint: http://jaeger:14268/api/traces
+
+metrics:
+  port: 9081

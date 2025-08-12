@@ -1,0 +1,32 @@
+listen:
+  service_name: cart
+  env: development
+  gateway_port: 8080
+  grpc_port: 7070
+  # migrations_path: internal/migrations
+  # stocks_service_url: localhost:7071
+  migrations_path: migrations
+  stocks_service_url: stocks-service:7071
+
+postgres:
+  # host: localhost
+  host: cart-db
+  port: 5432
+  username: user_cart
+  db_name: cart
+  password: cart1234
+  ssl_mode: disable
+
+kafka:
+  brokers:
+    - kafka1:29091
+    - kafka2:29092
+  topic: metrics
+  group_id: metrics-consumer-group
+
+tracing:
+  # jaeger_endpoint: http://localhost:14268/api/traces
+  jaeger_endpoint: http://jaeger:14268/api/traces
+
+metrics:
+  port: 9080

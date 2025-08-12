@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package stocks;
+
+option go_package = "stocks/pkg/api/stocks;stocksapi";
+
+import "google/api/annotations.proto";
+
+service StockService {
+	rpc AddStock(AddStockRequest) returns (AddStockResponse) {
+		option (google.api.http) = {
+			post: "/stocks/item/add"
+			body: "*"
+		};
+	}
+
+	rpc DeleteStock(DeleteStockRequest) returns (DeleteStockResponse) {
+		option (google.api.http) = {
+			post: "/stocks/item/delete"
+			body: "*"
+		};
+	}
+
+	rpc ListStocksByLocation(ListStocksByLocationRequest) returns (ListStocksByLocationResponse) {
+		option (google.api.http) = {
+			post: "/stocks/list/location"
+			body: "*"
+		};
+	}
+
+	rpc GetStock(GetStockRequest) returns (GetStockResponse) {
+		option (google.api.http) = {
+			post: "/stocks/item/get"
+			body: "*"
+		};
+	}
+}
+
+message AddStockRequest {
+	int64 user_id = 1;
+	uint32 sku = 2;
+  uint32 count = 3;
+  uint32 price = 4;
+  string location = 5;
+}
+
+message AddStockResponse {
+  string message = 1;
+}
+
+message DeleteStockRequest {
+	int64 user_id = 1;
+	uint32 sku = 2;
+}
+
+message DeleteStockResponse {
+  string message = 1;
+}
+
+message StockItem {
+	uint32 sku = 1;
+	string name = 2;
+	string type = 3;
+  uint32 count = 4;
+  uint32 price = 5;
+  string location = 6;
+}
+
+message ListStocksByLocationRequest {
+	int64 user_id = 1;
+  string location = 2;
+  int64 page_size = 3;
+  int64 current_page = 4;
+}
+
+message ListStocksByLocationResponse {
+  repeated StockItem items = 1;
+  int64 total_count = 2;
+  int64 page_number = 3;
+  int64 total_pages = 4;
+}
+
+message GetStockRequest {
+	uint32 sku = 1;
+}
+
+message GetStockResponse {
+  StockItem stock = 1;
+}

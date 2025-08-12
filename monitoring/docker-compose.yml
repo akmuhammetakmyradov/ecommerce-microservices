@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - services-network
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - services-network
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.51
+    container_name: jaeger
+    ports:
+      - "16686:16686"    # UI
+      - "6831:6831/udp"  # Tracing UDP
+      - "14268:14268"    # Collector HTTP
+      - "4318:4318"      # OTLP gRPC
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - services-network
+
+volumes:
+  grafana-data:
+
+networks:
+  services-network:
+    external: true

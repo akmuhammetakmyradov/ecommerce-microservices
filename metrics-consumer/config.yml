@@ -1,0 +1,8 @@
+kafka:
+  brokers:
+    - kafka1:29091
+    - kafka2:29092
+    # - localhost:9091
+    # - localhost:9092
+  topic: metrics
+  group_id: metrics-consumer-group

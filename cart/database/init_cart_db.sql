@@ -1,0 +1,19 @@
+DROP DATABASE IF EXISTS cart;
+DROP ROLE IF EXISTS user_cart;
+
+CREATE ROLE user_cart LOGIN PASSWORD 'cart1234';
+
+CREATE DATABASE cart;
+    WITH
+    OWNER = user_cart
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+
+\c cart
+
+
+GRANT ALL PRIVILEGES ON DATABASE cart TO user_cart;
+GRANT USAGE ON SCHEMA public TO user_cart;
+GRANT CREATE ON SCHEMA public TO user_cart;

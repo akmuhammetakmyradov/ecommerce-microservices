@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  cart-db:
+    extends:
+      file: ./cart/deploy/dev/docker-compose.yml
+      service: cart-db
+
+  cart-service:
+    depends_on:
+      - cart-db
+    extends:
+      file: ./cart/deploy/dev/docker-compose.yml
+      service: cart-service
+
+  stocks-db:
+    extends:
+      file: ./stocks/deploy/dev/docker-compose.yml
+      service: stocks-db
+
+  stocks-service:
+    depends_on:
+      - stocks-db
+    extends:
+      file: ./stocks/deploy/dev/docker-compose.yml
+      service: stocks-service
+
+  # metrics-consumer:
+  #   depends_on:
+  #     - kafka1
+  #     - kafka2
+  #   extends:
+  #     file: ./kafka/docker-compose.yml
+  #     service: metrics-consumer
+
+  # zookeeper:
+  #   extends:
+  #     file: ./kafka/docker-compose.yml
+  #     service: zookeeper
+
+  # kafka1:
+  #   depends_on:
+  #     - zookeeper
+  #   extends:
+  #     file: ./kafka/docker-compose.yml
+  #     service: kafka1
+  
+  # kafka2:
+  #   depends_on:
+  #     - zookeeper
+  #   extends:
+  #     file: ./kafka/docker-compose.yml
+  #     service: kafka2
+
+  # kafka-ui:
+  #   depends_on:
+  #     - kafka1
+  #     - kafka2
+  #   extends:
+  #     file: ./kafka/docker-compose.yml
+  #     service: kafka-ui
+
+  prometheus:
+    extends:
+      file: ./monitoring/docker-compose.yml
+      service: prometheus
+
+  grafana:
+    extends:
+      file: ./monitoring/docker-compose.yml
+      service: grafana
+
+  jaeger:
+    extends:
+      file: ./monitoring/docker-compose.yml
+      service: jaeger
+
+volumes:
+  cart_storage:
+  stocks_storage:
+  grafana-data:
+
+networks:
+  services-network:
+    external: true

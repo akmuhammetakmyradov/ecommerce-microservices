@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package cart;
+
+option go_package = "cart/pkg/api/cart;cartapi";
+
+import "google/api/annotations.proto";
+
+service CartService {
+	rpc AddItemToCart(AddItemToCartRequest) returns (AddItemToCartResponse) {
+		option (google.api.http) = {
+			post: "/cart/item/add"
+			body: "*"
+		};
+	}
+
+	rpc DeleteItemFromCart(DeleteItemFromCartRequest) returns (DeleteItemFromCartResponse) {
+		option (google.api.http) = {
+			post: "/cart/item/delete"
+			body: "*"
+		};
+	}
+
+	rpc CartList(CartListRequest) returns (CartListResponse) {
+		option (google.api.http) = {
+			post: "/cart/list"
+			body: "*"
+		};
+	}
+
+	rpc ClearCart(ClearCartRequest) returns (ClearCartResponse) {
+		option (google.api.http) = {
+			post: "/cart/clear"
+			body: "*"
+		};
+	}
+}
+
+message AddItemToCartRequest {
+	int64 user_id = 1;
+	uint32 sku = 2;
+  uint32 count = 3;
+}
+
+message AddItemToCartResponse {
+  string message = 1;
+}
+
+message DeleteItemFromCartRequest {
+	int64 user_id = 1;
+	uint32 sku = 2;
+}
+
+message DeleteItemFromCartResponse {
+  string message = 1;
+}
+
+message StockItem {
+	uint32 sku = 1;
+	string name = 2;
+  uint32 count = 3;
+  uint32 price = 4;
+}
+
+message CartListRequest {
+	int64 user_id = 1;
+}
+
+message CartListResponse {
+  repeated StockItem items = 1;
+  uint32 total_price = 2;
+}
+
+message ClearCartRequest {
+	int64 user_id = 1;
+}
+
+message ClearCartResponse {
+  string message = 1;
+}

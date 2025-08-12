@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  stocks-db:
+    image: postgres:14.1-alpine
+    container_name: "stocks-db"
+    env_file:
+      - .env
+    ports:
+      - '5061:5432'
+    volumes:
+      - stocks_storage:/var/lib/postgresql/data
+      - ../../database/init_stocks_db.sh:/docker-entrypoint-initdb.d/init_stocks_db.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user_stocks -d stocks"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    networks:
+      - services-network
+
+  stocks-service:
+    image: akmuhammet/stocks:hw11
+    restart: unless-stopped
+    container_name: "stocks-service"
+    ports:
+      - "8081:8081"  # grpc-gateway
+      - "7071:7071"  # grpc-server
+      - "9081:9081"  # metrics
+    depends_on:
+      stocks-db:
+        condition: service_healthy
+    networks:
+      - services-network
+
+volumes:
+  stocks_storage:
+
+networks:
+  services-network:
+    external: true
