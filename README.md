@@ -2,6 +2,8 @@
 
 A production-ready e-commerce backend with Go, gRPC, PostgreSQL, Kafka, and full observability.
 
+---
+
 ## 📌 Overview
 
 This project is a **microservices-based backend** for an e-commerce platform, implemented in **Go**.
