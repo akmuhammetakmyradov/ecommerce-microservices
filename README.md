@@ -1,5 +1,7 @@
 # 🛒 E-Commerce Microservices Backend
 
+A production-ready e-commerce backend with Go, gRPC, PostgreSQL, Kafka, and full observability.
+
 ## 📌 Overview
 
 This project is a **microservices-based backend** for an e-commerce platform, implemented in **Go**.
@@ -135,5 +137,3 @@ Each service has its own Dockerfile and `docker-compose.yml` for development and
 ## 📄 License
 
 This project was developed as part of a **Bootcamp Final Project** and is open for learning and portfolio purposes.
-
----
