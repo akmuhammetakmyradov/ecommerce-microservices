@@ -25,40 +25,40 @@ services:
       file: ./stocks/deploy/dev/docker-compose.yml
       service: stocks-service
 
-  # metrics-consumer:
-  #   depends_on:
-  #     - kafka1
-  #     - kafka2
-  #   extends:
-  #     file: ./kafka/docker-compose.yml
-  #     service: metrics-consumer
+  metrics-consumer:
+    depends_on:
+      - kafka1
+      - kafka2
+    extends:
+      file: ./kafka/docker-compose.yml
+      service: metrics-consumer
 
-  # zookeeper:
-  #   extends:
-  #     file: ./kafka/docker-compose.yml
-  #     service: zookeeper
+  zookeeper:
+    extends:
+      file: ./kafka/docker-compose.yml
+      service: zookeeper
 
-  # kafka1:
-  #   depends_on:
-  #     - zookeeper
-  #   extends:
-  #     file: ./kafka/docker-compose.yml
-  #     service: kafka1
+  kafka1:
+    depends_on:
+      - zookeeper
+    extends:
+      file: ./kafka/docker-compose.yml
+      service: kafka1
   
-  # kafka2:
-  #   depends_on:
-  #     - zookeeper
-  #   extends:
-  #     file: ./kafka/docker-compose.yml
-  #     service: kafka2
+  kafka2:
+    depends_on:
+      - zookeeper
+    extends:
+      file: ./kafka/docker-compose.yml
+      service: kafka2
 
-  # kafka-ui:
-  #   depends_on:
-  #     - kafka1
-  #     - kafka2
-  #   extends:
-  #     file: ./kafka/docker-compose.yml
-  #     service: kafka-ui
+  kafka-ui:
+    depends_on:
+      - kafka1
+      - kafka2
+    extends:
+      file: ./kafka/docker-compose.yml
+      service: kafka-ui
 
   prometheus:
     extends:
